@@ -1,0 +1,10 @@
+https://www.digitalocean.com/community/tutorials/how-to-remove-docker-images-containers-and-volumes
+docker images -a
+docker rmi $(docker images -a -q)
+supprimer toutes les images 
+
+docker ps -a
+docker stop $(docker ps -a -q)
+docker rm $(docker ps -a -q)
+
+stoper et supprimer tout les container 

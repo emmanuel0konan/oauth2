@@ -1,0 +1,71 @@
+//////Creer un projet react js 
+npx create-react-app my-app
+https://create-react-app.dev/docs/getting-started
+cd my-app
+npm start //port 3000
+
+//// next js 
+npx create-next-app@latest //pour installer automatiquement next js 
+npm run dev
+https://nextjs.org/docs/pages/getting-started/installation
+
+
+//nuxt js 
+https://nuxt.com/docs/getting-started/installation
+npx nuxi@latest init <project-name>
+npm run dev -- -o
+
+//nest js 
+https://dreamix.eu/insights/building-your-first-nestjs-application-a-step-by-step-guide/
+npx @nestjs/cli new projectName
+cd basic-project
+npm run start:dev
+
+
+
+//react native 
+expo 
+https://reactnative.dev/docs/environment-setup
+npx create-expo-app@latest install pour installer
+npx expo start demarer le serveur 
+npm run reset-project 
+cli
+https://how.dev/answers/how-to-create-a-new-react-native-project
+npx @react-native-community/cli init
+
+
+// node et express js
+npm init // initier node js  ou npm init -y
+npm install express
+Step 3: Create an app.js (or server.js) file. This will serve as the main entry point for your application.
+const express = require('express');
+
+const app = express();
+const PORT = 3000;
+
+app.listen(PORT, (error) =>{
+    if(!error)
+        console.log("Server is Successfully Running, 
+                   and App is listening on port "+ PORT)
+    else 
+        console.log("Error occurred, server can't start", error);
+    }
+);
+
+//flask 
+
+https://www.digitalocean.com/community/tutorials/how-to-make-a-web-application-using-flask-in-python-3-fr
+
+
+
+
+
+
+
+
+
+
+
+
+
+
