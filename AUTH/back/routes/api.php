@@ -10,6 +10,6 @@ Route::get('/user', function (Request $request) {
 Route::get('test', function () {
     return response()->json(['message' => 'Hello world']);
 });
-Route::get('/redirectToGoogle' ,[AuthController::class,'redirectToGoogle']);
+//Route::get('/redirectToGoogle' ,[AuthController::class,'redirectToGoogle'])->name('redirectToGoogle');
 Route::post('/login', [AuthController::class,'login']);
 Route::post('/register', [AuthController::class, 'register']);

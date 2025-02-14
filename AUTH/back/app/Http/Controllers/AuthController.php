@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use League\Config\Exception\ValidationException;
 use App\Models\User;
+use Illuminate\Support\Str;
 use Exception;
 use Illuminate\Support\Facades\Session as FacadesSession;
 use Illuminate\Support\Facades\Auth;
@@ -45,34 +46,26 @@ class AuthController extends Controller
     public function handleGoogleCallback(Request $request)
     {
         try {
-            $user_google    = Socialite::driver('google')->user();
-            $user           = User::where('email', $user_google->getEmail())->first();
+            $user_google = Socialite::driver('google')->stateless()->user();
+            //dd($user_google);
+            $user = User::where('email', $user_google->getEmail())->first();
             if ($user != null) {
-
-                Auth::login($user, true);
-                return redirect()->route('user.dashboard');
+                Auth::login($user);
+                $token = $user->createToken(time())->plainTextToken ;
+                return redirect()->route('redirect',compact('token'));
                 // set session
-                $userId = $user->id;
-                $newSession = User::find('user_id', $userId);
-                $newSession->google_id = $user_google->id;
-                $newSession->google_token = $user_google->token;
-                $newSession->save();
             } else {
                 // ===================== IF INCLUDE REGISTER NEW USER ==========================
-                // $newUser = new User();
-                // $newUser->name = $user_google->name;
-                // $newUser->email = $user_google->email;
-                // $newUser->username = $user_google->email;
-                // $newUser->google_id = $user_google->id;
-                // $newUser->google_token = $user_google->token;
-                // $newUser->password = Hash::make(12345678);
-                // $newUser->save();
-                
-                // Auth::login($newUser, true);
-                // return redirect()->route('user.dashboard');
-
-                FacadesSession::flash('error', 'Email belum terdaftar di system, Harap registrasi melalui admin');
-                return redirect()->route('user.login');
+                $newUser = new User();
+                $newUser->name = $user_google->name;
+                $newUser->email = $user_google->email;
+                $newUser->google_id = $user_google->id;
+                $newUser->google_token = $user_google->token;
+                $newUser->password = Hash::make(Str::random(8));
+                $newUser->save();
+                $token = $user->createToken(time())->plainTextToken ;
+                Auth::login($newUser);
+                return redirect()->route('redirect',compact('token'));
             }
         } catch (Exception $e) {
             dd($e);
